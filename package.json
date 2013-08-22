@@ -1,0 +1,25 @@
+{
+  "name": "ardeploy",
+  "description": "Deploy web apps using a physical button",
+  "version": "0.0.1",
+  "homepage": "https://github.com/exchgr/ardeploy",
+
+  "contributors": [
+    { "name": "Dan Mundy", "email": "drmmundy@me.com" },
+    { "name": "Ken Whittaker", "email": "kdubs28@gmail.com" }
+  ],
+
+  "keywords": [
+    "arduino", "usb", "serial", "serialport", "foreman", "deploy", "button", "potentiometer", "dial"
+  ],
+
+  "bugs": { "url": "https://github.com/exchgr/ardeploy/issues" },
+
+  "engines": {
+    "node": "~0.10"
+  },
+
+  "dependencies": {
+    "johnny-five": "~0.7"
+  }
+}
