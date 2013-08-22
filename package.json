@@ -13,6 +13,11 @@
     "arduino", "usb", "serial", "serialport", "foreman", "deploy", "button", "potentiometer", "dial"
   ],
 
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/exchgr/ardeploy"
+  }
+
   "bugs": { "url": "https://github.com/exchgr/ardeploy/issues" },
 
   "engines": {
