@@ -60,7 +60,10 @@ board.on 'ready', ->
       yellow.strobe 500
       command = ''
       if environment.current == master
-        command = 'git push origin master'
+        branch = ''
+        exec 'git rev-parse --abbrev-ref HEAD', (error, stdout, stderr) ->
+          branch = stdout
+        command = 'git checkout master; git merge ' + branch + '; git mergetool; git push origin master; git checkout ' + branch
       else
         command = 'git push origin $(git rev-parse --abbrev-ref HEAD)'
       exec command, (error, stdout, stderr) ->
