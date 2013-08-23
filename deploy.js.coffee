@@ -60,7 +60,7 @@ board.on 'ready', ->
       yellow.strobe 500
       command = ''
       if environment.current == master
-        command = 'git push origin master'
+        command = 'git push origin masters'
       else
         command = 'git push origin $(git rev-parse --abbrev-ref HEAD)'
       exec command, (error, stdout, stderr) ->
