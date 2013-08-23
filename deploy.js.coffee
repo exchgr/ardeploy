@@ -1,6 +1,8 @@
+sys = require 'sys'
+exec = (require 'child_process').exec
 five = require 'johnny-five'
 board = new five.Board
-  port: "/dev/tty.usbmodemfa141"
+  # port: "/dev/tty.usbmodemfa141"
 
 board.on 'ready', ->
   # Global variables
@@ -56,8 +58,9 @@ board.on 'ready', ->
       inProgress = true
       console.log 'Deploying to ' + environment.current.name + '.'
       yellow.strobe 500
-      board.wait 4000, ->
+      exec 'pwd; sleep 5', (error, stdout, stderr) ->
         yellow.stop().off()
+        console.log stdout
         console.log 'Finished successfully'
         inProgress = false
     else
