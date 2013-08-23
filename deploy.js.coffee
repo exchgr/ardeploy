@@ -69,6 +69,7 @@ board.on 'ready', ->
       exec command, (error, stdout, stderr) ->
         yellow.stop().off()
         console.log stdout
+        console.log stderr
         console.log 'Finished successfully'
         inProgress = false
     else
