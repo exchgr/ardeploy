@@ -60,17 +60,14 @@ board.on 'ready', ->
       yellow.strobe 500
       command = ''
       if environment.current == master
-        branch = ''
-        exec 'git rev-parse --abbrev-ref HEAD', (error, stdout, stderr) ->
-          branch = stdout
-        command = 'git checkout master && git merge ' + branch + ' && git mergetool && git push origin master && git checkout ' + branch
+        command = 'export BRANCH=$(git rev-parse --abbrev-ref HEAD) && git checkout master && git merge $BRANCH && git mergetool && git push origin master && git checkout $BRANCH'
       else
         command = 'git push origin $(git rev-parse --abbrev-ref HEAD)'
       exec command, (error, stdout, stderr) ->
         yellow.stop().off()
         console.log stdout
         console.log stderr
-        console.log 'Finished successfully'
+        console.log 'Done.'
         inProgress = false
     else
       console.log 'Deploy already in progress.'
