@@ -9,18 +9,18 @@ board.on 'ready', ->
   potThresh = 768
   inProgress = false
   environment =
-    'current': staging
-    'old': staging
+    'current': branch
+    'old': branch
 
-  staging =
-    'name': 'staging'
+  branch =
+    'name': 'branch'
     'color':
       'red': 0
       'green': 255
       'blue': 0
 
-  production =
-    'name': 'production'
+  master =
+    'name': 'master'
     'color':
       'red': 255
       'green': 0
@@ -42,9 +42,9 @@ board.on 'ready', ->
   potentiometer.on 'read', ->
     environment.old = environment.current
     if @.value < potThresh
-      environment.current = staging
+      environment.current = branch
     else
-      environment.current = production
+      environment.current = master
 
     if environment.current != environment.old
       rgb.color rgbToHex environment.current.color
@@ -58,7 +58,12 @@ board.on 'ready', ->
       inProgress = true
       console.log 'Deploying to ' + environment.current.name + '.'
       yellow.strobe 500
-      exec 'pwd; sleep 5', (error, stdout, stderr) ->
+      command = ''
+      if environment.current == master
+        command = 'git push origin master'
+      else
+        command = 'git push origin $(git rev-parse --abbrev-ref HEAD)'
+      exec command, (error, stdout, stderr) ->
         yellow.stop().off()
         console.log stdout
         console.log 'Finished successfully'
