@@ -63,7 +63,7 @@ board.on 'ready', ->
         branch = ''
         exec 'git rev-parse --abbrev-ref HEAD', (error, stdout, stderr) ->
           branch = stdout
-        command = 'git checkout master; git merge ' + branch + '; git mergetool; git push origin master; git checkout ' + branch
+        command = 'git checkout master && git merge ' + branch + ' && git mergetool && git push origin master && git checkout ' + branch
       else
         command = 'git push origin $(git rev-parse --abbrev-ref HEAD)'
       exec command, (error, stdout, stderr) ->
