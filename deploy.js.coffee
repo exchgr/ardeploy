@@ -5,6 +5,7 @@ board = new five.Board
 board.on 'ready', ->
   # Global variables
   potThresh = 768
+  inProgress = false
   environment =
     'current': staging
     'old': staging
@@ -51,14 +52,20 @@ board.on 'ready', ->
 
   # Functions
   push = ->
-    console.log 'pushing to ' + environment.current.name
-    yellow.strobe 500
+    if !inProgress
+      inProgress = true
+      console.log 'Deploying to ' + environment.current.name + '.'
+      yellow.strobe 500
+      board.wait 4000, ->
+        yellow.stop().off()
+        console.log 'Finished successfully'
+        inProgress = false
+    else
+      console.log 'Deploy already in progress.'
 
   compToHex = (comp) ->
     hex = comp.toString 16
     if hex.length == 1 then "0" + hex else hex
 
   rgbToHex = (color) ->
-    hex = (compToHex color.red) + (compToHex color.green) + (compToHex color.blue)
-    console.log hex + ' ' + color.red + ' ' + color.green + ' ' + color.blue
-    hex
+    (compToHex color.red) + (compToHex color.green) + (compToHex color.blue)
